@@ -1,9 +1,10 @@
 package de.darthpumpkin.pkmnlib;
 
-import java.util.*;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
+import lombok.Getter;
+
+import java.util.*;
 
 /**
  * List with a predefined maximum size, not allowing multiple references to the
@@ -16,9 +17,8 @@ import com.google.common.collect.ListMultimap;
  * does not matter whether or not e1.equals(e2).<br>
  * The constraint of not allowing null elements implies that all elements will
  * always be at the head of the list.
- * 
+ *
  * @author dominik
- * 
  */
 // TODO rename (BoundedIndexableSet ?)
 public final class UniqueBoundedList<E> implements Team<E> {
@@ -31,7 +31,7 @@ public final class UniqueBoundedList<E> implements Team<E> {
 	// Maps a hash value to the list of entries with that hash value (Idea: two
 	// entries with identical hash values are likely to be identical)
 	private final ListMultimap<Integer, E> hashes;
-	private final int maxSize;
+	@Getter private final int maxSize;
 
 	/**
 	 * Creates a new empty list with {@value #DEFAULT_MAX_SIZE} free slots.
@@ -44,10 +44,8 @@ public final class UniqueBoundedList<E> implements Team<E> {
 	 * Creates a new empty list using the specified number as the upper limit of
 	 * elements in this list.
 	 *
-	 * @param maxSize
-	 *            Maximum number of elements in this list.
-	 * @throws IllegalArgumentException
-	 *             If maxSize < 0
+	 * @param maxSize Maximum number of elements in this list.
+	 * @throws IllegalArgumentException If maxSize < 0
 	 */
 	public UniqueBoundedList(int maxSize) {
 		this(new ArrayList<E>(), maxSize);
@@ -59,10 +57,8 @@ public final class UniqueBoundedList<E> implements Team<E> {
 	 * null elements. Sets {@value #DEFAULT_MAX_SIZE} as the maximum number of
 	 * elements in this list.
 	 *
-	 * @param coll
-	 *            Collection whose elements are to be placed in this list.
-	 * @throws MaximumSizeExceededException
-	 *             if coll.size() > {@value #DEFAULT_MAX_SIZE}
+	 * @param coll Collection whose elements are to be placed in this list.
+	 * @throws MaximumSizeExceededException if coll.size() > {@value #DEFAULT_MAX_SIZE}
 	 */
 	public UniqueBoundedList(Collection<? extends E> coll) {
 		this(coll, DEFAULT_MAX_SIZE);
@@ -74,14 +70,10 @@ public final class UniqueBoundedList<E> implements Team<E> {
 	 * null elements. Sets the specified number as the upper limit of elements
 	 * in this list.
 	 *
-	 * @param coll
-	 *            Collection whose elements are to be placed in this list.
-	 * @param maxSize
-	 *            Maximum number of elements in this list.
-	 * @throws IllegalArgumentException
-	 *             if maxSize < 0
-	 * @throws MaximumSizeExceededException
-	 *             if coll.size() > maxSize
+	 * @param coll    Collection whose elements are to be placed in this list.
+	 * @param maxSize Maximum number of elements in this list.
+	 * @throws IllegalArgumentException     if maxSize < 0
+	 * @throws MaximumSizeExceededException if coll.size() > maxSize
 	 */
 	public UniqueBoundedList(Collection<? extends E> coll, int maxSize) {
 		if (maxSize < 0) {
@@ -220,7 +212,8 @@ public final class UniqueBoundedList<E> implements Team<E> {
 
 		// Step 2: Remove identical elements
 		synchronized (cWithoutNull) {
-			REMOVE_DUPLICATE_REFERENCES: for (E newElem : cWithoutNull) {
+			REMOVE_DUPLICATE_REFERENCES:
+			for (E newElem : cWithoutNull) {
 				List<E> elementsWithSameHashCode = hashes.get(newElem
 						.hashCode());
 				for (E elemSameHash : elementsWithSameHashCode) {

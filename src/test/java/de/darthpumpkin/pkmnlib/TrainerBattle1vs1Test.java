@@ -3,27 +3,13 @@
  */
 package de.darthpumpkin.pkmnlib;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.darthpumpkin.pkmnlib.battle.*;
+import org.junit.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import de.darthpumpkin.pkmnlib.battle.DummyPlayer;
-import de.darthpumpkin.pkmnlib.battle.Player;
-import de.darthpumpkin.pkmnlib.battle.SingleBattlePlayer;
-import de.darthpumpkin.pkmnlib.battle.TrainerBattle1vs1;
-import de.darthpumpkin.pkmnlib.battle.Turn;
-import de.darthpumpkin.pkmnlib.battle.Weather;
+import static org.junit.Assert.*;
 
 /**
  * All reference values taken from http://www.smogon.com/calc/
@@ -195,7 +181,7 @@ public class TrainerBattle1vs1Test {
 	 * {@link Turn#compareTo(Turn)}, additionally taking into account the
 	 * pokemons' speed and the battle's state.
 	 */
-	@Test
+	@Test @Ignore
 	public void testTurnOrder() {
 		fail("Not yet implemented");
 	}
